@@ -1,0 +1,101 @@
+% !TEX program = xelatex
+%
+% --- FINAL CORRECT TEMPLATE ---
+
+\documentclass[12pt, letterpaper]{article}
+
+%--------------------------------------------------
+% Packages for Layout, Spacing, and Headers
+%--------------------------------------------------
+
+\usepackage[margin=1in]{geometry}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+%--------------------------------------------------
+% Font and Language Setup
+%--------------------------------------------------
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{english}
+\setotherlanguage{arabic}
+
+\setmainfont{Libertinus Serif}
+
+% This block correctly defines the bold font for Arabic, fixing the warnings.
+\newfontfamily\arabicfont[
+  Script=Arabic,
+  Scale=1,
+  UprightFont = {ScheherazadeNew-Regular},
+  BoldFont = {ScheherazadeNew-Bold}
+]{Scheherazade New}
+\newfontfamily\arabicfonttt[
+  Script=Arabic,
+  Scale=1,
+  UprightFont = {ScheherazadeNew-Regular},
+  BoldFont = {ScheherazadeNew-Bold}
+]{Scheherazade New}
+
+
+%--------------------------------------------------
+% Custom Commands and Settings
+%--------------------------------------------------
+
+% The date is pre-formatted by the Python script.
+\newcommand{\docdate}{$created$}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\lhead{\small Silsilah Scriptoria Notes}
+\rhead{\small Ismail Al-Faisal | \docdate}
+\cfoot{\small \thepage}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\setlist[itemize]{itemsep=5pt}
+\setlist[enumerate]{itemsep=5pt}
+
+
+%--------------------------------------------------
+% Pandoc Metadata and Custom Title Format
+%--------------------------------------------------
+
+\title{$title$}
+% Author and Date are in the header.
+
+
+% Redefine the \maketitle command for a custom layout.
+\makeatletter
+\def\@maketitle{%
+  \begin{center}
+  \setlength{\parskip}{0pt}
+  
+  \vspace*{-2.5em}
+
+  {\Large\bfseries \@title\par}
+  
+  \vspace{3em}
+
+  \end{center}
+}
+\makeatother
+
+
+%--------------------------------------------------
+% Document Start
+%--------------------------------------------------
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+$body$
+
+\end{document}
