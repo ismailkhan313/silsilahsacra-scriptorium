@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 # flake8: noqa
-# --- GOLD STANDARD FILTER ---
-# This is the final, stable version.
-# It works with the LaTeX template above.
 
 import panflute as pf
 import re
