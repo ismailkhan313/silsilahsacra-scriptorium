@@ -13,6 +13,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{parskip}
+\usepackage{setspace}
 \usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue]{hyperref}
 
 % --- PACKAGES FOR PARALLEL TEXT TABLE ---
@@ -33,8 +34,8 @@
 %   FONT CONFIGURATION
 %----------------------------------------------------------------------------------------
 \setmainfont{Libertinus Serif}
-\newfontfamily\arabicfont[Script=Arabic, Scale=1.3]{Scheherazade New}
-\newfontfamily\arabicfonttt[Script=Arabic, Scale=1.3]{Amiri}
+\newfontfamily\arabicfont[Script=Arabic, Scale=1.1]{Scheherazade New}
+\newfontfamily\arabicfonttt[Script=Arabic, Scale=1.1]{Amiri}
 \newfontfamily\fancyfont{TeX Gyre Chorus}
 
 %----------------------------------------------------------------------------------------
@@ -57,9 +58,20 @@ $endif$
 % Using a nested 'p' column to allow text wrapping within the cell.
 \newcommand{\litanyEntry}[2]{%
   \begin{tabular}[t]{@{}p{\linewidth}@{}}
-    \raggedright % Keep the text left-aligned instead of fully justified
-    {\small{#1}} \\[-2pt] % Transliteration: small, all caps.
-    {\small #2} % Translation: small
+    \raggedright
+    {\small\textit{#1}} \\[1pt]
+    \begin{spacing}{0.9}
+      \footnotesize #2
+    \end{spacing}
+  \end{tabular}%
+}
+
+% This ensures the Arabic text is also in a top-aligned box,
+% matching the behavior of \litanyEntry for perfect vertical alignment.
+\newcommand{\arabEntry}[1]{%
+  \begin{tabular}[t]{@{}p{\linewidth}@{}}
+    \raggedleft
+    {\textarab{#1}}
   \end{tabular}%
 }
 
@@ -106,6 +118,9 @@ $if(toc)$
 \tableofcontents
 \newpage
 $endif$
+
+% Increase the vertical spacing of all table rows by 50%
+% \renewcommand{\arraystretch}{1.4}
 
 % Pandoc will now insert its own complete table environment here.
 % The template no longer pre-defines the table structure.
