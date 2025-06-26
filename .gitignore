@@ -21,6 +21,9 @@
 *.md
 
 references.bib
+.obsidian/
+.docs/
+.venv/
 
 # -------------------------------------------------------------------
 # 2. Log and Auxiliary Files
