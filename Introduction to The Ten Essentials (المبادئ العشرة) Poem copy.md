@@ -13,7 +13,7 @@ otherlangs: arabic
 abstract: "A short article presenting and explaining the Arabic poem on the 'Ten Essentials' (Al-Mabādi' al-'Asharah) by Imam Muḥammad ibn 'Alī al-Ṣabbān, a foundational framework for studying any discipline in the Islamic tradition."
 ---
 
-# The Poem
+## The Poem
 
 A poem by Muḥammad ibn ʿAlī al-Ṣabbān (d. 1206/1791)
 
@@ -27,7 +27,7 @@ A poem by Muḥammad ibn ʿAlī al-Ṣabbān (d. 1206/1791)
 وَمَنْ دَرَى الْجَمِيعَ حَازَ الشَّرَفَا
 \end{otherlanguage}
 
-## Something else
+### Something else
 
 Verily, the principles of every art are ten:
 
