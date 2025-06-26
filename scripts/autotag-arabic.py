@@ -19,6 +19,7 @@ def prepare(doc):
             date_str = pf.stringify(created_meta)
         
         try:
+            # Use non-zero-padded day for macOS/Linux compatibility (%-d)
             parsed_date = datetime.datetime.strptime(date_str, '%Y-%m-%d')
             formatted_date = parsed_date.strftime('%B %-d, %Y')
             doc.metadata['created'] = pf.MetaString(formatted_date)
@@ -33,12 +34,13 @@ def prepare(doc):
         else:
             title_md = pf.stringify(title_meta)
 
-        parts = re.split(r'([\u0600-\u06FF]+)', title_md)
+        parts = re.split(r'([\u0600-\u06FF\s]+)', title_md) # Slightly improved regex to capture spaces
         new_title_parts = []
         for part in parts:
             if part:
                 if ARABIC_CHAR_REGEX.search(part):
-                    new_title_parts.append(pf.RawInline(f'\\textarabic{{{part}}}', format='latex'))
+                    # MODIFIED: Changed \textarabic to \foreignlanguage for babel/lualatex compatibility
+                    new_title_parts.append(pf.RawInline(f'\\foreignlanguage{{arabic}}{{{part}}}', format='latex'))
                 else:
                     new_title_parts.append(pf.Str(part))
         doc.metadata['title'] = pf.MetaList(*new_title_parts)
