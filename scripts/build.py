@@ -14,6 +14,13 @@ TEMPLATE_FILE = os.path.join("templates", "article.tex")
 
 # Location of your bibliography file
 BIB_FILE = "references.bib"
+
+# Directories where Pandoc should look for resource files (e.g., images, included .tex files)
+# The script will automatically add the 'shared' directory.
+RESOURCE_DIRS = [".", "templates", "shared"]
+
+# The specific publisher file we need to ensure exists
+PUBLISHER_INFO_FILE = os.path.join("shared", "publisher-info.tex")
 # ---------------------
 
 
@@ -52,21 +59,31 @@ def build_pdf():
     output_pdf_path = os.path.join(OUTPUT_DIR, f"{pdf_basename}.pdf")
 
     # --- 2. Check if all required files exist before attempting to build ---
-    required_files = [MD_FILE, TEMPLATE_FILE]
+    required_files = [MD_FILE, TEMPLATE_FILE, PUBLISHER_INFO_FILE]
     if os.path.exists(BIB_FILE):
         required_files.append(BIB_FILE)
 
     for f in required_files:
         if not os.path.exists(f):
             print(f"Error: Required file not found: {f}")
+            print(
+                "Please ensure you are running this script from your project's root directory."
+            )
             sys.exit(1)
 
     # --- 3. Construct and run the Pandoc command ---
+
+    # Build the resource path string in an OS-agnostic way
+    # This joins the directories with ':' on macOS/Linux and ';' on Windows
+    resource_path_str = os.path.pathsep.join(RESOURCE_DIRS)
+
+    print(f"Using resource path: {resource_path_str}")
+
     command = [
         "pandoc",
         MD_FILE,
         "--output",
-        output_pdf_path,  # Use the new, dynamic output path
+        output_pdf_path,
         "--from",
         "markdown+citations",
         "--template",
@@ -77,7 +94,7 @@ def build_pdf():
         "--bibliography",
         BIB_FILE,
         "--resource-path",
-        ".:./templates",  # Allows pandoc to find images/files in root and templates folder
+        resource_path_str,  # Use the new, OS-agnostic resource path
     ]
 
     try:
@@ -93,6 +110,7 @@ def build_pdf():
         print("--- Pandoc Compilation Failed ---", file=sys.stderr)
         print(f"Pandoc returned a non-zero exit code: {e.returncode}", file=sys.stderr)
         print("\n--- Pandoc Error Output ---", file=sys.stderr)
+        # Pandoc's stderr often contains the specific LaTeX error message
         print(e.stderr, file=sys.stderr)
         sys.exit(1)
 
