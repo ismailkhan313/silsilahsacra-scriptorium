@@ -10,11 +10,10 @@
 				"-file-line-error",
 				"-pdf",
 				"-outdir=%OUTDIR%",
-				"%DOC%"
+				"%DOC%",
+				"-f"
 			]
-		}
-	],
-	"latex-workshop.latex.tools": [
+		},
 		{
 			"name": "lualatex",
 			"command": "lualatex",
@@ -22,16 +21,7 @@
 				"-synctex=1",
 				"-interaction=nonstopmode",
 				"-file-line-error",
-				"%DOC%"
-			]
-		},
-		{
-			"name": "pdflatex",
-			"command": "pdflatex",
-			"args": [
-				"-synctex=1",
-				"-interaction=nonstopmode",
-				"-file-line-error",
+				"-output-directory=%OUTDIR%",
 				"%DOC%"
 			]
 		},
@@ -41,15 +31,14 @@
 			"args": ["%DOCFILE%"]
 		}
 	],
-
 	"latex-workshop.latex.recipes": [
+		{
+			"name": "latexmk",
+			"tools": ["latexmk"]
+		},
 		{
 			"name": "lualatex",
 			"tools": ["lualatex"]
-		},
-		{
-			"name": "pdflatex",
-			"tools": ["pdflatex"]
 		}
 	]
 }
