@@ -6,8 +6,8 @@ import os
 # Input Markdown file (your main article)
 MD_FILE = "Introduction to The Ten Essentials (المبادئ العشرة) Poem copy.md"
 
-# Output PDF file
-PDF_FILE = "article_output.pdf"
+# Directory where the final PDF will be stored
+OUTPUT_DIR = "published"
 
 # Location of the LaTeX template
 TEMPLATE_FILE = os.path.join("templates", "article.tex")
@@ -20,13 +20,17 @@ BIB_FILE = "references.bib"
 def check_dependencies():
     """Checks if pandoc and lualatex are in the system's PATH."""
     try:
-        subprocess.run(["pandoc", "--version"], capture_output=True, check=True)
+        subprocess.run(
+            ["pandoc", "--version"], capture_output=True, check=True, text=True
+        )
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("Error: pandoc is not installed or not in your system's PATH.")
         sys.exit(1)
 
     try:
-        subprocess.run(["lualatex", "--version"], capture_output=True, check=True)
+        subprocess.run(
+            ["lualatex", "--version"], capture_output=True, check=True, text=True
+        )
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("Error: lualatex is not installed or not in your system's PATH.")
         print("Please install a TeX distribution like TeX Live, MiKTeX, or MacTeX.")
@@ -37,7 +41,17 @@ def build_pdf():
     """Constructs and runs the pandoc command to build the PDF."""
     print(f"Starting compilation of '{MD_FILE}'...")
 
-    # Check if all required files exist before attempting to build
+    # --- 1. Set up dynamic output path ---
+    # Create the output directory if it doesn't exist
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    # Get the base name of the markdown file (e.g., "my-article")
+    pdf_basename = os.path.splitext(os.path.basename(MD_FILE))[0]
+
+    # Create the full output path (e.g., "published/my-article.pdf")
+    output_pdf_path = os.path.join(OUTPUT_DIR, f"{pdf_basename}.pdf")
+
+    # --- 2. Check if all required files exist before attempting to build ---
     required_files = [MD_FILE, TEMPLATE_FILE]
     if os.path.exists(BIB_FILE):
         required_files.append(BIB_FILE)
@@ -47,12 +61,12 @@ def build_pdf():
             print(f"Error: Required file not found: {f}")
             sys.exit(1)
 
-    # Pandoc command as a list of arguments
+    # --- 3. Construct and run the Pandoc command ---
     command = [
         "pandoc",
         MD_FILE,
         "--output",
-        PDF_FILE,
+        output_pdf_path,  # Use the new, dynamic output path
         "--from",
         "markdown+citations",
         "--template",
@@ -63,14 +77,16 @@ def build_pdf():
         "--bibliography",
         BIB_FILE,
         "--resource-path",
-        ".:./templates",
+        ".:./templates",  # Allows pandoc to find images/files in root and templates folder
     ]
 
     try:
         # The 'text=True' argument is good practice for cleaner output
-        result = subprocess.run(command, check=True, capture_output=True, text=True)
-        print(f"Success! PDF created at '{PDF_FILE}'.")
-        # Uncomment the line below if you want to see pandoc's output
+        result = subprocess.run(
+            command, check=True, capture_output=True, text=True, encoding="utf-8"
+        )
+        print(f"\nSuccess! PDF created at '{output_pdf_path}'.")
+        # Uncomment the line below if you want to see pandoc's detailed output
         # print(result.stdout)
 
     except subprocess.CalledProcessError as e:
