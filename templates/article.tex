@@ -1,4 +1,5 @@
 % !TEX program = lualatex
+% TEMPLATE: article.tex
 \documentclass[12pt, letterpaper, twoside]{article}
 
 %----------------------------------------------------------------------------------------
@@ -81,10 +82,15 @@ $endif$
 %   METADATA AND TITLE BLOCK
 %----------------------------------------------------------------------------------------
 \title{\vspace{-2cm}\fontsize{18}{22}\selectfont\textbf{$title$}}
-\author{$author$}
-$if(date)$
-\date{$date$}
-$endif$
+\author{%
+  \small % Smaller font size for author and date
+  $author$
+  $if(date)$
+  \\[4pt] % Add a small vertical space if date exists
+  $date$
+  $endif$
+}
+\date{} % Date is included in the author field, so this is left empty
 
 %----------------------------------------------------------------------------------------
 %   HEADING AND SPACING CUSTOMIZATION
@@ -108,17 +114,6 @@ $endif$
 
 \maketitle
 \thispagestyle{plain}
-
-$if(abstract)$
-\begin{abstract}
-\noindent $abstract$
-\end{abstract}
-% --- Ornament and spacing after abstract ---
-\begin{center}
-\pgfornament[width=4cm]{88}
-\end{center}
-\vspace{2cm} 
-$endif$
 
 $if(toc)$
 \tableofcontents

@@ -4,7 +4,7 @@ import os
 
 # --- Configuration ---
 # Input Markdown file (your main article)
-MD_FILE = "Introduction to The Ten Essentials (المبادئ العشرة) Poem copy_formatted.md"
+MD_FILE = "Introduction to The Ten Essentials (المبادئ العشرة) Poem copy_adjusted.md"
 
 # Directory where the final PDF will be stored
 OUTPUT_DIR = "published"
