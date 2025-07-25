@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Converts a source file (like Markdown) to a styled PDF.
+Converts a source file, like Markdown or HTML, to a pre-defined styled PDF.
 
 This script uses Pandoc with the WeasyPrint engine to create a high-quality
 PDF. It can optionally apply a Pandoc filter (e.g., for auto-tagging
