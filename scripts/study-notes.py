@@ -6,7 +6,7 @@ from datetime import date, datetime  # To get and format dates
 
 # --- CONFIGURATION ---
 # The folder where your Markdown notes are stored.
-NOTES_FOLDER_PATH = "/Users/viz1er/Codebase/obsidian-vault/02 Literature Notes/WISE English Academy/Journey of Fiqh"
+NOTES_FOLDER_PATH = "/Users/viz1er/Codebase/obsidian-vault/02 Literature Notes/SeekersGuidance/Islamic Studies/Level 2/Shurunbulali’s Nur al-Idah Explained"
 
 # The temporary name for the combined Markdown file.
 COMBINED_FILENAME = "combined.md"
