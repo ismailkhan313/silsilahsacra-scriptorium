@@ -1,8 +1,6 @@
 import argparse
 import os
 
-# import re
-
 
 def demote_headings_in_file(input_path, output_path):
     """
